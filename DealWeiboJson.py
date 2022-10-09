@@ -112,7 +112,7 @@ def geocodeB(address, city):
     try:
         if address.find('·'):
             address = address.replace('·', '市', 1)
-        base = "http://api.map.baidu.com/geocoder?address=" + address + "&city=" + str(city) + "&output=json&key="+key"
+        base = "http://api.map.baidu.com/geocoder?address=" + address + "&city=" + str(city) + "&output=json&key="+key
         response = requests.get(base,timeout=(3.05, 27))
         answer = response.json()
         tamped = bd09towgs84(answer['result']['location']['lng'], answer['result']['location']['lat'])
