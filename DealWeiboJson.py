@@ -118,7 +118,9 @@ def geocodeB(address, city):
         tamped = bd09towgs84(answer['result']['location']['lng'], answer['result']['location']['lat'])
         loca['lng'] = tamped[0]
         loca['lat'] = tamped[1]
-        print(address,loca['lng'], loca['lat'])
+        level=answer['result']['level']
+        loca['level']=level
+        print(address,loca['lng'], loca['lat'],level)
 
         if loca:
             return loca
@@ -126,6 +128,7 @@ def geocodeB(address, city):
         print(address)
         loca['lng'] = 0
         loca['lat'] = 0
+        loca['level']='无'
         return loca
         # geocodeB(address, city)
 def get_latlng(location,address_dict,cityname):
@@ -186,6 +189,7 @@ if __name__=='__main__':
         
             rf['lat'] = rf.apply(lambda x: x['latlng']['lat'], axis=1)
             rf['lng'] = rf.apply(lambda x: x['latlng']['lng'], axis=1)
+            rf['level'] = rf.apply(lambda x: x['latlng']['level'], axis=1)
             rf=rf.drop(['latlng'], axis=1)
             rf.to_csv('完整版'+cityname+'.csv',index=None)
             rf[['user_id','lng','lat','reposts_count',
